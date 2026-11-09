@@ -69,7 +69,7 @@ module LocaleAudit
     # Exceptions are "file:line" for any Float in the shipped money path.
     def float_scan(root)
       Dir[File.join(root, '**/*.rb')].flat_map do |file|
-        File.readlines(file).each_with_index.filter_map do |line, i|
+        File.readlines(file, encoding: 'UTF-8').each_with_index.filter_map do |line, i|
           if !line.lstrip.start_with?('#') && line.match?(FLOAT_USE)
             "#{File.basename(root)}/#{file.delete_prefix("#{root}/")}:#{i + 1}"
           end

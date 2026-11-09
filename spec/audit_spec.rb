@@ -23,7 +23,7 @@ RSpec.describe LocaleAudit::Audit do
       catalogue:, label: 'defective',
       translations: LocaleAudit.load_yaml("#{root}/fixtures/translations/defective.yml").fetch('translations')
     )
-    expected = File.readlines("#{root}/fixtures/translations/defective.yml").flat_map do |line|
+    expected = File.readlines("#{root}/fixtures/translations/defective.yml", encoding: 'UTF-8').flat_map do |line|
       key = line[/^\s+([\w.]+):/, 1]
       line.scan(/I18N-\d\d/).map { |id| [id, key] }
     end
