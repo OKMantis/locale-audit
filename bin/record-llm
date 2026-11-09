@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Calls Claude once per target locale and records the result as
+# fixtures/translations/llm.yml so CI can audit it offline.
+# Usage: ANTHROPIC_API_KEY=... bin/record-llm
+require 'bundler/setup'
+require_relative '../lib/locale_audit'
+
+abort 'Set ANTHROPIC_API_KEY to record a fresh LLM candidate set.' unless ENV.key?('ANTHROPIC_API_KEY')
+
+root = File.expand_path('..', __dir__)
+catalogue = LocaleAudit.load_yaml("#{root}/fixtures/catalogue.yml")
+translator = LocaleAudit::LlmTranslator.new
+locales = LocaleAudit::LOCALES.keys - [LocaleAudit::SOURCE_LOCALE]
+
+recording = {
+  'meta' => { 'source' => "#{LocaleAudit::LlmTranslator::MODEL}, recorded #{Date.today.iso8601}, unedited" },
+  'translations' => locales.to_h { |locale| [locale, translator.translate(catalogue, locale)] }
+}
+File.write("#{root}/fixtures/translations/llm.yml", YAML.dump(recording))
+puts "Recorded #{locales.join(', ')} to fixtures/translations/llm.yml"

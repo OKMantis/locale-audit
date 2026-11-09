@@ -1,0 +1,32 @@
+# Source strings as a product team ships them: en-US, named placeholders only.
+# Money args are integer minor units plus an ISO 4217 code; dates are Dates.
+# order_locked: the placeholders' left-to-right order carries meaning in every locale.
+payout.scheduled:
+  source: "Your payout of %{amount} will arrive on %{date}."
+  args: { amount: { minor: 123456, currency: EUR }, date: 2026-03-07 }
+refund.partial:
+  source: "%{customer} was refunded %{refund} of the original %{charge}."
+  args: { customer: Acme GmbH, refund: { minor: 2500, currency: EUR }, charge: { minor: 10000, currency: EUR } }
+invoice.due:
+  source: "Invoice %{invoice_number} for %{amount} is due on %{due_date}."
+  args: { invoice_number: INV-0042, amount: { minor: 99900, currency: USD }, due_date: 2026-04-01 }
+dispute.opened:
+  source: "A dispute for %{amount} was opened on %{opened_on}. Respond by %{respond_by}."
+  args: { amount: { minor: 4999, currency: GBP }, opened_on: 2026-03-02, respond_by: 2026-03-16 }
+fee.applied:
+  source: "A fee of %{fee} was deducted from your balance."
+  args: { fee: { minor: 150, currency: EUR } }
+balance.available:
+  source: "Available balance: %{amount}"
+  args: { amount: { minor: 1234567, currency: KWD } }
+subscription.renews:
+  source: "Your plan renews on %{date} at %{amount} per month."
+  args: { date: 2026-04-07, amount: { minor: 4980, currency: JPY } }
+transfer.converted:
+  source: "Converted %{source_amount} → %{destination_amount}"
+  order_locked: true
+  args: { source_amount: { minor: 100000, currency: EUR }, destination_amount: { minor: 162340, currency: JPY } }
+statement.period:
+  source: "Statement period: %{period_start} – %{period_end}"
+  order_locked: true
+  args: { period_start: 2026-02-01, period_end: 2026-02-28 }

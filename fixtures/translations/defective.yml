@@ -1,0 +1,36 @@
+# Hand-written translations with deliberate defects, each the kind of thing a
+# machine translator does when nobody is checking. Every DEFECT line must be
+# caught; every other line must pass.
+meta:
+  source: hand-written, seeded defects
+translations:
+  de-DE:
+    payout.scheduled: "Ihre Auszahlung über %{amount} ist unterwegs." # DEFECT I18N-01: %{date} dropped
+    refund.partial: "%{customer} wurden %{refund} des ursprünglichen Betrags von %{charge} erstattet."
+    invoice.due: "Rechnung %{invoice_number} über %{amount} ist am %{due_date} fällig."
+    dispute.opened: "Am %{opened_on} wurde eine Zahlungsanfechtung über %{amount} eröffnet. Antworten Sie bis zum %{respond_by}."
+    fee.applied: "Eine Gebühr von %s wurde von Ihrem Guthaben abgezogen." # DEFECT I18N-01 + I18N-02: positional %s
+    balance.available: "Verfügbares Guthaben: %{amount} €" # DEFECT I18N-03: currency symbol appended
+    subscription.renews: "Ihr Tarif verlängert sich am %{date} zu %{amount} pro Monat."
+    transfer.converted: "Umgerechnet: %{source_amount} → %{destination_amount}"
+    statement.period: "Abrechnungszeitraum: %{period_start} – %{period_end}"
+  es-ES:
+    payout.scheduled: "Tu transferencia de %{amount} llegará el %{date}."
+    refund.partial: "Se han reembolsado %{reembolso} del cargo original de %{charge} a %{customer}." # DEFECT I18N-01: placeholder name translated
+    invoice.due: "La factura %{invoice_number} por %{amount} vence el 04/01/2026." # DEFECT I18N-01 + I18N-05: date baked in, US order
+    dispute.opened: "El %{opened_on} se abrió una disputa por %{amount}. Responde antes del %{respond_by}."
+    fee.applied: "Se ha descontado una comisión de %{fee} de tu saldo."
+    balance.available: "Saldo disponible: %{amount}"
+    subscription.renews: "Tu plan se renueva el %{date} por %{amount} al mes."
+    transfer.converted: "Convertido: %{source_amount} → %{destination_amount}"
+    statement.period: "Periodo del extracto: %{period_end} – %{period_start}" # DEFECT I18N-02: range reversed
+  ja-JP:
+    payout.scheduled: "%{amount}の入金は%{date}に着金予定です。"
+    refund.partial: "%{customer}様に、元の請求額%{charge}のうち%{refund}を返金しました。"
+    invoice.due: "請求書%{invoice_number}（%{amount}）の支払期日は%{due_date}です。"
+    dispute.opened: "%{opened_on}に%{amount}の不審請求の申し立てが行われました。7日以内にご対応ください。" # DEFECT I18N-01 + I18N-05: deadline paraphrased as "within 7 days"
+    fee.applied: "%{fee}の手数料が残高から差し引かれました。"
+    balance.available: "利用可能残高：%{amount}"
+    subscription.renews: "ご利用プランは%{date}に月額￥4,980で更新されます。" # DEFECT I18N-01 + I18N-03: amount pre-rendered
+    transfer.converted: "両替：%{source_amount} → %{destination_amount}"
+    statement.period: "明細期間：%{period_start}～%{period_end}"
