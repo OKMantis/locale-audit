@@ -17,7 +17,6 @@ module LocaleAudit
 
     def placeholders(text) = text.scan(PLACEHOLDER).flatten
     def bare(text) = text.gsub(PLACEHOLDER, '')
-    def money_args(entry) = entry.fetch('args', {}).select { |_, v| v.is_a?(Hash) }
 
     def placeholder_set(text, entry, _locale)
       want = placeholders(entry['source']).tally
@@ -46,7 +45,7 @@ module LocaleAudit
     end
 
     def minor_units(_text, entry, locale)
-      money_args(entry).filter_map do |name, money|
+      entry.fetch('args', {}).select { |_, v| v.is_a?(Hash) }.filter_map do |name, money|
         minor, currency = money.values_at('minor', 'currency')
         # Args belong to the key, not the locale: report a bad type once, against the source.
         unless minor.is_a?(Integer)
