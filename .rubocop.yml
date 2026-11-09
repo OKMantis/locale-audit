@@ -1,0 +1,14 @@
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  SuggestExtensions: false
+
+# Interpolation templates are this gem's subject matter, not a style slip.
+Style/FormatStringToken:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Metrics/AbcSize:
+  Max: 22
+Metrics/BlockLength:
+  Exclude: ["spec/**/*"]

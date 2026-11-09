@@ -1,7 +1,9 @@
-require "date"
-require "yaml"
-require_relative "locale_audit/locales"
-require_relative "locale_audit/money"
+# frozen_string_literal: true
+
+require 'date'
+require 'yaml'
+require_relative 'locale_audit/locales'
+require_relative 'locale_audit/money'
 
 module LocaleAudit
   PLACEHOLDER = /%\{(\w+)\}/
@@ -14,7 +16,7 @@ module LocaleAudit
     template.gsub(PLACEHOLDER) do
       value = args.fetch(Regexp.last_match(1)) { raise KeyError, "no argument for %{#{Regexp.last_match(1)}}" }
       case value
-      when Hash then Money.format(value.fetch("minor"), value.fetch("currency"), locale)
+      when Hash then Money.format(value.fetch('minor'), value.fetch('currency'), locale)
       when Date then value.strftime(locale(locale)[:date])
       else value.to_s
       end
@@ -23,3 +25,6 @@ module LocaleAudit
 
   def load_yaml(path) = YAML.safe_load_file(path, permitted_classes: [Date])
 end
+
+require_relative 'locale_audit/controls'
+require_relative 'locale_audit/audit'

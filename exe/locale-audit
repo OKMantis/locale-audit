@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Usage: locale-audit CATALOGUE.yml TRANSLATIONS.yml
+# Prints the audit report; exits 1 on any exception so CI fails the build.
+require_relative '../lib/locale_audit'
+
+catalogue_path, translations_path = ARGV
+abort 'usage: locale-audit CATALOGUE.yml TRANSLATIONS.yml' unless translations_path
+
+candidate = LocaleAudit.load_yaml(translations_path)
+audit = LocaleAudit::Audit.new(
+  catalogue: LocaleAudit.load_yaml(catalogue_path),
+  translations: candidate.fetch('translations'),
+  label: "#{translations_path} (#{candidate.dig('meta', 'source')})"
+)
+puts audit.report
+exit audit.passed?
