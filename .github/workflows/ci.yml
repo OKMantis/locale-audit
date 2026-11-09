@@ -1,0 +1,15 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - run: bundle exec rspec
+      - name: Audit the recorded LLM translations (fails the build on any exception)
+        if: hashFiles('fixtures/translations/llm.yml') != ''
+        run: bundle exec exe/locale-audit fixtures/catalogue.yml fixtures/translations/llm.yml
