@@ -80,5 +80,16 @@ RSpec.describe LocaleAudit::Audit do
         )
       end
     end
+
+    it 'reads source as UTF-8 even when the default external encoding is US-ASCII' do
+      original = Encoding.default_external
+      Encoding.default_external = Encoding::US_ASCII
+      Dir.mktmpdir do |dir|
+        File.write("#{dir}/fx.rb", "label = '€'\nrate = amount.to_f\n")
+        expect(LocaleAudit::Controls.float_scan(dir)).to eq(["#{File.basename(dir)}/fx.rb:2"])
+      end
+    ensure
+      Encoding.default_external = original
+    end
   end
 end

@@ -66,7 +66,7 @@ I18N-05  Dates and numbers come from the locale formatter, not the string     PA
 OPINION: UNQUALIFIED. No exceptions across 5 controls.
 ```
 
-A clean pass on one recording is not a guarantee. Change the prompt, the model or the catalogue and the next run can fail. The gate turns "the model usually gets this right" into a check that runs on every recording. The run also shows I18N-02 doing its job. In ja-JP, `refund.partial` puts `%{charge}` before `%{refund}` (元の請求額%{charge}のうち%{refund}), which Japanese grammar requires, and the control allows it because that key is not `order_locked`. On `transfer.converted`, where order is the meaning, any swap fails.
+A clean pass on one recording is not a guarantee. Change the prompt, the model or the catalogue and the next run can fail. The gate turns "the model usually gets this right" into a check that runs on every recording. The run also shows I18N-02 not over-firing. In ja-JP, `refund.partial` puts `%{charge}` before `%{refund}` (元の請求額%{charge}のうち%{refund}), which Japanese grammar requires, and the control allows it because that key is not `order_locked`. On `order_locked` keys such as `transfer.converted`, where order is the meaning, a swap fails, as the es-ES `statement.period` defect above shows.
 
 The gate does not judge fluency, tone or terminology. That is the quality estimator's job, and it only sees strings that passed here.
 
@@ -83,5 +83,6 @@ Locales: en-US, es-ES, de-DE, ja-JP. Number formats are hand-rolled from CLDR.
 ```sh
 bundle exec rspec
 bundle exec exe/locale-audit fixtures/catalogue.yml fixtures/translations/defective.yml   # exits 1
+bundle exec exe/locale-audit fixtures/catalogue.yml fixtures/translations/llm.yml         # Claude's recording, exits 0
 ANTHROPIC_API_KEY=... bin/record-llm   # Claude translates; CI audits the recording offline
 ```

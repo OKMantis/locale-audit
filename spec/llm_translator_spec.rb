@@ -41,8 +41,6 @@ RSpec.describe LocaleAudit::LlmTranslator do
     path = "#{root}/fixtures/translations/llm.yml"
 
     it 'passes every control, or the build fails with the exception report' do
-      skip 'fixtures/translations/llm.yml not recorded yet: run bin/record-llm' unless File.exist?(path)
-
       audit = LocaleAudit::Audit.new(catalogue: LocaleAudit.load_yaml("#{root}/fixtures/catalogue.yml"),
                                      translations: LocaleAudit.load_yaml(path).fetch('translations'), label: path)
       expect(audit).to be_passed, audit.report
