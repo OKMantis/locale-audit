@@ -48,6 +48,28 @@ I18N-03  ja-JP  subscription.renews  literal amount "4,980"; amounts render from
 I18N-02  es-ES  statement.period     order period_end, period_start reverses source order period_start, period_end
 ```
 
+## What Claude produced
+
+`bin/record-llm` asked `claude-opus-5-5` to translate the catalogue into es-ES, de-DE and ja-JP. Its output is committed unedited in `fixtures/translations/llm.yml`, and CI audits that file offline on every push.
+
+```
+LOCALE-CORRECTNESS AUDIT
+Candidate set: fixtures/translations/llm.yml (claude-opus-5-5, recorded 2026-11-09, unedited)
+Population:    9 keys x 4 locales = 36 strings
+
+I18N-01  Placeholder set preserved exactly                                    PASS
+I18N-02  No reordering that changes meaning                                   PASS
+I18N-03  Money only via a placeholder; no literal amount or currency          PASS
+I18N-04  Integer minor units in, exact round-trip out; no float in the path   PASS
+I18N-05  Dates and numbers come from the locale formatter, not the string     PASS
+
+OPINION: UNQUALIFIED. No exceptions across 5 controls.
+```
+
+A clean pass on one recording is not a guarantee. Change the prompt, the model or the catalogue and the next run can fail. The gate turns "the model usually gets this right" into a check that runs on every recording. The run also shows I18N-02 doing its job. In ja-JP, `refund.partial` puts `%{charge}` before `%{refund}` (元の請求額%{charge}のうち%{refund}), which Japanese grammar requires, and the control allows it because that key is not `order_locked`. On `transfer.converted`, where order is the meaning, any swap fails.
+
+The gate does not judge fluency, tone or terminology. That is the quality estimator's job, and it only sees strings that passed here.
+
 ## Locale decisions
 
 Locales: en-US, es-ES, de-DE, ja-JP. Number formats are hand-rolled from CLDR.
