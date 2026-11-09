@@ -28,3 +28,4 @@ end
 
 require_relative 'locale_audit/controls'
 require_relative 'locale_audit/audit'
+require_relative 'locale_audit/llm_translator'
