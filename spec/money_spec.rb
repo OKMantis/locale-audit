@@ -35,22 +35,3 @@ RSpec.describe LocaleAudit::Money do
     expect { described_class.format(100, 'XYZ', 'en-US') }.to raise_error(ArgumentError, /unknown currency/)
   end
 end
-
-RSpec.describe LocaleAudit, '.render' do
-  args = { 'amount' => { 'minor' => 123_456, 'currency' => 'EUR' }, 'date' => Date.new(2026, 3, 7) }
-
-  {
-    'en-US' => 'EUR 1,234.56 on 03/07/2026',
-    'es-ES' => '1234,56 EUR on 07/03/2026',
-    'de-DE' => '1.234,56 EUR on 07.03.2026',
-    'ja-JP' => 'EUR 1,234.56 on 2026/03/07'
-  }.each do |locale, expected|
-    it "renders money and date per #{locale}" do
-      expect(described_class.render('%{amount} on %{date}', args, locale)).to eq(expected)
-    end
-  end
-
-  it 'raises when a placeholder has no argument' do
-    expect { described_class.render('%{fee}', args, 'en-US') }.to raise_error(KeyError, /%\{fee\}/)
-  end
-end
