@@ -23,7 +23,7 @@ RSpec.describe LocaleAudit::Audit do
       catalogue:, label: 'defective',
       translations: LocaleAudit.load_yaml("#{root}/fixtures/translations/defective.yml").fetch('translations')
     )
-    expected = File.readlines("#{root}/fixtures/translations/defective.yml").flat_map do |line|
+    expected = File.readlines("#{root}/fixtures/translations/defective.yml", encoding: 'UTF-8').flat_map do |line|
       key = line[/^\s+([\w.]+):/, 1]
       line.scan(/I18N-\d\d/).map { |id| [id, key] }
     end
@@ -79,6 +79,17 @@ RSpec.describe LocaleAudit::Audit do
                                    'float arithmetic in the money path')
         )
       end
+    end
+
+    it 'reads source as UTF-8 even when the default external encoding is US-ASCII' do
+      original = Encoding.default_external
+      Encoding.default_external = Encoding::US_ASCII
+      Dir.mktmpdir do |dir|
+        File.write("#{dir}/fx.rb", "label = '€'\nrate = amount.to_f\n")
+        expect(LocaleAudit::Controls.float_scan(dir)).to eq(["#{File.basename(dir)}/fx.rb:2"])
+      end
+    ensure
+      Encoding.default_external = original
     end
   end
 end

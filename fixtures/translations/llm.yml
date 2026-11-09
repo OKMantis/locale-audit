@@ -1,0 +1,39 @@
+---
+meta:
+  source: claude-opus-5-5, recorded 2026-11-09, unedited
+translations:
+  es-ES:
+    payout.scheduled: Tu pago de %{amount} llegará el %{date}.
+    refund.partial: Se ha reembolsado a %{customer} %{refund} del cargo original de
+      %{charge}.
+    invoice.due: La factura %{invoice_number} por importe de %{amount} vence el %{due_date}.
+    dispute.opened: Se abrió una disputa por %{amount} el %{opened_on}. Responde antes
+      del %{respond_by}.
+    fee.applied: Se ha descontado una comisión de %{fee} de tu saldo.
+    balance.available: 'Saldo disponible: %{amount}'
+    subscription.renews: Tu plan se renueva el %{date} por %{amount} al mes.
+    transfer.converted: Convertido %{source_amount} → %{destination_amount}
+    statement.period: 'Periodo del extracto: %{period_start} – %{period_end}'
+  de-DE:
+    payout.scheduled: Ihre Auszahlung in Höhe von %{amount} wird am %{date} eingehen.
+    refund.partial: "%{customer} wurden %{refund} des ursprünglichen Betrags von %{charge}
+      erstattet."
+    invoice.due: Rechnung %{invoice_number} über %{amount} ist am %{due_date} fällig.
+    dispute.opened: Am %{opened_on} wurde eine Zahlungsanfechtung über %{amount} eröffnet.
+      Antworten Sie bis zum %{respond_by}.
+    fee.applied: Eine Gebühr in Höhe von %{fee} wurde von Ihrem Guthaben abgezogen.
+    balance.available: 'Verfügbares Guthaben: %{amount}'
+    subscription.renews: Ihr Tarif verlängert sich am %{date} zum Preis von %{amount}
+      pro Monat.
+    transfer.converted: 'Umgerechnet: %{source_amount} → %{destination_amount}'
+    statement.period: 'Abrechnungszeitraum: %{period_start} – %{period_end}'
+  ja-JP:
+    payout.scheduled: "%{amount}の入金は%{date}に着金予定です。"
+    refund.partial: "%{customer}様に、元の請求額%{charge}のうち%{refund}が返金されました。"
+    invoice.due: 請求書%{invoice_number}（%{amount}）の支払期日は%{due_date}です。
+    dispute.opened: "%{opened_on}に%{amount}の不審請求の申し立てが行われました。%{respond_by}までにご対応ください。"
+    fee.applied: 残高から%{fee}の手数料が差し引かれました。
+    balance.available: 利用可能残高：%{amount}
+    subscription.renews: ご利用のプランは%{date}に月額%{amount}で更新されます。
+    transfer.converted: 両替済み：%{source_amount} → %{destination_amount}
+    statement.period: 明細期間：%{period_start}～%{period_end}
